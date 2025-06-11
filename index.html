@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeAkun - Akun Premium dengan Harga Pelajar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#5D5CDE',
+                            dark: '#4A49B1',
+                            light: '#7E7DE4'
+                        },
+                        secondary: {
+                            DEFAULT: '#FF6B6B',
+                            dark: '#E05252',
+                            light: '#FF8A8A'
+                        },
+                        dark: {
+                            DEFAULT: '#181818',
+                            light: '#282828',
+                            lighter: '#383838'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'spin-slow': 'spin 4s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '200% 0' },
+                            '100%': { backgroundPosition: '-200% 0' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #5D5CDE 0%, #9796E8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dark .gradient-text {
+            background: linear-gradient(90deg, #7E7DE4 0%, #B5B4F3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .shimmer-bg {
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+        }
+        
+        .dark .shimmer-bg {
+            background: linear-gradient(90deg, 
+                rgba(40,40,40,0) 0%, 
+                rgba(80,80,80,0.2) 50%, 
+                rgba(40,40,40,0) 100%);
+            background-size: 200% 100%;
+        }
+        
+        .animate-rise {
+            animation: rise 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .product-modal-content {
+            background-color: white;
+            border-radius: 1rem;
+            max-width: 90%;
+            width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .dark .product-modal-content {
+            background-color: #282828;
+        }
+        
+        .product-modal.active .product-modal-content {
+            transform: translateY(0);
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+        }
+        
+        .carousel {
+            scroll-snap-type: x mandatory;
+        }
+        
+        .carousel-item {
+            scroll-snap-align: start;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 10% 20%, rgb(93, 92, 222) 0%, rgb(143, 142, 236) 90%);
+        }
+        
+        .dark .hero-gradient {
+            background: radial-gradient(circle at 10% 20%, rgb(70, 69, 180) 0%, rgb(93, 92, 222) 90%);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #282828;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #5D5CDE;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4A49B1;
+        }
+        
+        /* Blob animation */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            animation: blob-animation 10s infinite alternate;
+        }
+        
+        @keyframes blob-animation {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(50px, 20px) scale(1.2);
+            }
+        }
+
+        /* Define discount badge rotation animation */
+        @keyframes badge-rotation {
+            0% { transform: rotate(-12deg); }
+            50% { transform: rotate(12deg); }
+            100% { transform: rotate(-12deg); }
+        }
+        
+        .discount-badge {
+            animation: badge-rotation 3s ease-in-out infinite;
+        }
+        
+        /* Testimonial slider */
+        .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .testimonial-slide {
+            flex: 0 0 100%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Notice animation */
+        @keyframes important-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(93, 92, 222, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(93, 92, 222, 0); }
+        }
+        
+        .important-notice {
+            animation: important-pulse 2s infinite;
+        }
+        
+        /* Floating labels */
+        .search-container {
+            position: relative;
+        }
+        
+        .search-input {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .dark .search-input {
+            border-color: #4a5568;
+            background-color: #1a202c;
+            color: white;
+        }
+        
+        .search-input:focus {
+            border-color: #5D5CDE;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.1);
+        }
+        
+        .search-label {
+            position: absolute;
+            left: 1rem;
+            top: 0.75rem;
+            color: #718096;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus ~ .search-label,
+        .search-input:not(:placeholder-shown) ~ .search-label {
+            transform: translateY(-1.75rem) scale(0.8);
+            background-color: white;
+            padding: 0 0.5rem;
+            color: #5D5CDE;
+        }
+        
+        .dark .search-input:focus ~ .search-label,
+        .dark .search-input:not(:placeholder-shown) ~ .search-label {
+            background-color: #181818;
+        }
+        
+        /* Hide variant containers by default */
+        .variant-container {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-dark text-gray-800 dark:text-gray-200">
+    <!-- Blobs -->
+    <div class="blob bg-primary-light/20 w-96 h-96 top-20 left-20 dark:bg-primary-light/10"></div>
+    <div class="blob bg-secondary/20 w-80 h-80 top-40 right-20 dark:bg-secondary/10"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-white/90 dark:bg-dark/90 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-2xl font-bold gradient-text">PrimeAkun</span>
+            </a>
+            
+            <div class="flex items-center space-x-4">
+                <a href="#products" class="hidden md:block hover:text-primary dark:hover:text-primary-light transition-colors">Produk</a>
+                <a href="#benefits" class="hidden md:block hover:text-primary dark:hover:text-primary-light transition-colors">Keunggulan</a>
+                <a href="#promo" class="hidden md:block hover:text-primary dark:hover:text-primary-light transition-colors">Pengumuman</a>
+                <a href="#testimonial" class="hidden md:block hover:text-primary dark:hover:text-primary-light transition-colors">Testimoni</a>
+                <a href="#faq" class="hidden md:block hover:text-primary dark:hover:text-primary-light transition-colors">FAQ</a>
+                <a href="#contact" class="hidden md:block hover:text-primary dark:hover:text-primary-light transition-colors">Kontak</a>
+                
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-light transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-light transition-colors">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-dark border-t dark:border-dark-light animate-rise">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                <a href="#products" class="py-2 hover:text-primary dark:hover:text-primary-light transition-colors">Produk</a>
+                <a href="#benefits" class="py-2 hover:text-primary dark:hover:text-primary-light transition-colors">Keunggulan</a>
+                <a href="#promo" class="py-2 hover:text-primary dark:hover:text-primary-light transition-colors">Pengumuman</a>
+                <a href="#testimonial" class="py-2 hover:text-primary dark:hover:text-primary-light transition-colors">Testimoni</a>
+                <a href="#faq" class="py-2 hover:text-primary dark:hover:text-primary-light transition-colors">FAQ</a>
+                <a href="#contact" class="py-2 hover:text-primary dark:hover:text-primary-light transition-colors">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-gradient pt-24 pb-16 md:py-32 relative overflow-hidden">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/2 text-white mb-12 md:mb-0 z-10">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Akun Premium dengan <span class="text-yellow-300 animate-pulse-slow">Harga Pelajar</span></h1>
+                <p class="text-xl opacity-90 mb-8">Dapatkan akses ke platform streaming, editing, dan desain favorit tanpa menguras kantong.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#products" class="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                        <i class="fas fa-shopping-cart"></i>
+                        Jelajahi Produk
+                    </a>
+                    <a href="https://wa.me/6285974385120" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp"></i>
+                        Hubungi Kami
+                    </a>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 relative z-10">
+                <div class="relative">
+                    <div class="bg-white dark:bg-dark-light rounded-2xl shadow-xl p-6 max-w-md mx-auto transform rotate-2 animate-float">
+                        <div class="absolute -top-4 -right-4 bg-secondary text-white text-sm font-bold px-4 py-1 rounded-full discount-badge">
+                            Harga Pelajar!
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="rounded-lg bg-blue-100 p-3 flex flex-col items-center animate-pulse-slow">
+                                <i class="fab fa-spotify text-green-600 text-2xl mb-1"></i>
+                                <span class="text-xs text-gray-800 font-medium">Spotify</span>
+                            </div>
+                            <div class="rounded-lg bg-red-100 p-3 flex flex-col items-center animate-pulse-slow" style="animation-delay: 0.2s">
+                                <i class="fab fa-youtube text-red-600 text-2xl mb-1"></i>
+                                <span class="text-xs text-gray-800 font-medium">YouTube</span>
+                            </div>
+                            <div class="rounded-lg bg-purple-100 p-3 flex flex-col items-center animate-pulse-slow" style="animation-delay: 0.4s">
+                                <i class="fas fa-video text-purple-600 text-2xl mb-1"></i>
+                                <span class="text-xs text-gray-800 font-medium">Netflix</span>
+                            </div>
+                            <div class="rounded-lg bg-cyan-100 p-3 flex flex-col items-center animate-pulse-slow" style="animation-delay: 0.1s">
+                                <i class="fas fa-pencil-alt text-cyan-600 text-2xl mb-1"></i>
+                                <span class="text-xs text-gray-800 font-medium">Canva</span>
+                            </div>
+                            <div class="rounded-lg bg-orange-100 p-3 flex flex-col items-center animate-pulse-slow" style="animation-delay: 0.3s">
+                                <i class="fas fa-cut text-orange-600 text-2xl mb-1"></i>
+                                <span class="text-xs text-gray-800 font-medium">CapCut</span>
+                            </div>
+                            <div class="rounded-lg bg-blue-100 p-3 flex flex-col items-center animate-pulse-slow" style="animation-delay: 0.5s">
+                                <i class="fas fa-film text-blue-600 text-2xl mb-1"></i>
+                                <span class="text-xs text-gray-800 font-medium">Disney+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute -bottom-12 left-0 right-0 h-24 bg-white dark:bg-dark transform skew-y-3"></div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="py-10 bg-white dark:bg-dark relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="search-container">
+                    <input type="text" id="search-products" class="search-input bg-white dark:bg-dark-light" placeholder=" ">
+                    <label for="search-products" class="search-label">Cari produk (Netflix, Spotify, dll)</label>
+                    <div class="absolute right-3 top-3 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div id="search-results" class="mt-2 bg-white dark:bg-dark-light rounded-lg shadow-lg absolute z-20 left-0 right-0 max-h-64 overflow-y-auto hidden"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notice Section -->
+    <section id="promo" class="py-12 bg-gray-50 dark:bg-dark-light relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Pengumuman <span class="gradient-text">Penting</span></h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Informasi penting sebelum melakukan pembelian!</p>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <div class="bg-white dark:bg-dark rounded-xl shadow-lg overflow-hidden border-l-4 border-primary important-notice">
+                    <div class="md:flex">
+                        <div class="md:w-1/3 bg-gradient-to-br from-primary to-primary-light p-6 flex flex-col justify-center items-center text-white">
+                            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 animate-pulse-slow">
+                                <i class="fas fa-exclamation-triangle text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-center">PERHATIAN!</h3>
+                            <div class="text-sm text-center opacity-90">Mohon dibaca dengan teliti</div>
+                        </div>
+                        <div class="md:w-2/3 p-6">
+                            <div class="mb-4">
+                                <span class="inline-block bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300 px-3 py-1 rounded-full text-sm font-semibold animate-pulse">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Wajib Dibaca
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-primary">Pastikan Nomor WhatsApp Anda Benar!</h3>
+                            <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-mobile-alt text-yellow-600 text-xl mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="text-gray-800 dark:text-gray-200 font-medium mb-2">Saat melakukan pembelian, tolong isi <strong class="text-primary">"Phone Number"</strong> dengan nomor WhatsApp yang ASLI dan AKTIF!</p>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                            <i class="fas fa-arrow-right text-primary mr-2"></i>
+                                            Pesanan akan otomatis dikirim ke WhatsApp Anda
+                                        </p>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                                            <i class="fas fa-arrow-right text-primary mr-2"></i>
+                                            Jangan gunakan nomor palsu atau tidak aktif
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-500 dark:text-gray-400">
+                                    <i class="fas fa-shield-check text-green-500 mr-1"></i>
+                                    Layanan terpercaya & bergaransi
+                                </div>
+                                <a href="https://wa.me/6285974385120" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-colors flex items-center gap-2">
+                                    <i class="fab fa-whatsapp"></i>
+                                    Hubungi Kami
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Purchases Animation -->
+                <div id="recent-purchases" class="fixed bottom-20 left-4 bg-white dark:bg-dark rounded-lg shadow-lg p-4 max-w-xs z-40 transform -translate-y-10 opacity-0 transition-all duration-500 hidden">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-dark-light flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-gray-500 dark:text-gray-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm"><span id="recent-buyer">Seseorang</span> baru saja membeli</p>
+                            <p class="text-sm font-semibold" id="recent-product">Netflix Premium</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="benefits" class="py-20 bg-white dark:bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Mengapa Memilih <span class="gradient-text">PrimeAkun</span>?</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Kami menyediakan akun premium dengan harga pelajar disertai layanan dan dukungan terbaik.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+                    <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-wallet feature-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Harga Terjangkau</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Nikmati layanan premium tanpa menguras kantong dengan harga ramah pelajar kami.</p>
+                </div>
+                
+                <div class="feature-card bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+                    <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt feature-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Layanan Bergaransi</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Kami menawarkan garansi penuh untuk semua produk kami demi ketenangan Anda.</p>
+                </div>
+                
+                <div class="feature-card bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+                    <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-headset feature-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Dukungan 24/7</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Tim dukungan pelanggan kami selalu siap membantu Anda dengan masalah apapun.</p>
+                </div>
+            </div>
+            
+            <!-- How It Works Section -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-center mb-8">Cara <span class="gradient-text">Berlangganan</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white dark:bg-dark-light rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shopping-cart text-2xl text-primary"></i>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -top-10 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                1
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Pilih Produk</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Pilih produk premium yang Anda inginkan dan klik tombol "Beli Sekarang"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark-light rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-credit-card text-2xl text-primary"></i>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -top-10 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                2
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Lakukan Pembayaran</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Pilih metode pembayaran dan selesaikan transaksi dengan aman</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark-light rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-whatsapp text-2xl text-primary"></i>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -top-10 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                3
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Akun Dikirim via WhatsApp</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Akun akan otomatis dikirim ke nomor WhatsApp yang Anda isi di formulir pembayaran</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark-light rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-all">
+                        <div class="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-laptop text-2xl text-primary"></i>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -top-10 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                4
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Akses Akun Premium</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">Terima detail akun dan nikmati layanan premium dengan garansi penuh</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Inspirational Call to Action -->
+                <div class="mt-12 bg-gradient-to-r from-primary to-primary-light text-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-4">Apa yang akan Anda ciptakan dengan akun premium?</h3>
+                        <p class="mb-6 max-w-3xl mx-auto opacity-90">Buka potensi kreativitas Anda dengan akses penuh ke layanan premium. Dari mengedit video profesional, mendesain konten menarik, hingga menikmati hiburan berkualitas tanpa batas.</p>
+                        <a href="#products" class="inline-block px-8 py-3 bg-white text-primary font-bold rounded-full hover:bg-gray-100 transition-colors transform hover:scale-105">
+                            Mulai Sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="py-20 bg-gray-50 dark:bg-dark-light relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Produk <span class="gradient-text">Premium</span> Kami</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Klik pada produk apa pun untuk melihat varian yang tersedia dan melakukan pembelian.</p>
+            </div>
+            
+            <!-- Product Categories Nav -->
+            <div class="flex flex-wrap justify-center mb-10 gap-2">
+                <button class="product-filter active px-4 py-2 rounded-full bg-primary text-white hover:bg-primary-dark transition-colors" data-filter="all">
+                    Semua
+                </button>
+                <button class="product-filter px-4 py-2 rounded-full bg-gray-200 dark:bg-dark hover:bg-gray-300 dark:hover:bg-dark-lighter transition-colors" data-filter="streaming">
+                    Streaming
+                </button>
+                <button class="product-filter px-4 py-2 rounded-full bg-gray-200 dark:bg-dark hover:bg-gray-300 dark:hover:bg-dark-lighter transition-colors" data-filter="editing">
+                    Editing
+                </button>
+                <button class="product-filter px-4 py-2 rounded-full bg-gray-200 dark:bg-dark hover:bg-gray-300 dark:hover:bg-dark-lighter transition-colors" data-filter="design">
+                    Design
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Alight Motion -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="editing">
+                    <div class="product-header cursor-pointer" data-product="alight-motion">
+                        <div class="h-40 bg-blue-100 dark:bg-blue-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-photo-film text-5xl text-blue-500 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Alight Motion</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Aplikasi editing video</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp5.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/akun</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="alight-motion-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">Ios 1 Tahun</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br><br>DURASI 1 TAHUN<br>GARANSI 6 BULAN<br>LEGAL DAN BERGARANSI</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Alight Motion" 
+                                                data-variant="Ios 1 Tahun" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/06m225orwvv5/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Tahun [ Android ]</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br><br>-- PRIVATE ACCOUNT<br>-- LOGIN VIA EMAIL<br>-- ANTI ERROR<br>-- GARANSI 6 BULAN</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Alight Motion" 
+                                                data-variant="1 Tahun [ Android ]" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/zwvmmrwnv8or/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Canva -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="design">
+                    <div class="product-header cursor-pointer" data-product="canva">
+                        <div class="h-40 bg-cyan-100 dark:bg-cyan-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-pencil-ruler text-5xl text-cyan-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Canva</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Platform desain</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp1.200</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="canva-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKAN DIBERIKAN BERUPA LINK UNDANGAN SETELAH DI ORDER YA!<br><br>DURASI 28-30 HARI<br>BERGARANSI FULL</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp1.200</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Canva" 
+                                                data-variant="1 Bulan" 
+                                                data-price="1200"
+                                                data-link="http://lynk.id/primeakun/lyzgg1nmqkxy/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CapCut Pro -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="editing">
+                    <div class="product-header cursor-pointer" data-product="capcut">
+                        <div class="h-40 bg-orange-100 dark:bg-orange-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-cut text-5xl text-orange-500 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">CapCut Pro</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Aplikasi editing video</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp5.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/minggu</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="capcut-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">7 Hari Sharing</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br>DURASI 7 HARI<br>LEGAL DAN BERGARANSI<br>ANTI LOG OUT</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="CapCut Pro" 
+                                                data-variant="7 Hari Sharing" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/n6zppxxd3xeg/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan Sharing</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN SHARING YA!<br><br>DURASI 28 HARI<br>ANTI LOG OUT<br>GARANSI PENUH</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp13.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="CapCut Pro" 
+                                                data-variant="1 Bulan Sharing" 
+                                                data-price="13000"
+                                                data-link="http://lynk.id/primeakun/qjzeev1dkj0q/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Express VPN -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="expressvpn">
+                        <div class="h-40 bg-green-100 dark:bg-green-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-5xl text-green-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Express VPN</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Layanan VPN</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp5.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="expressvpn-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan Sharing</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN SHARING<br><br>-- ANTI LIMIT</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Express VPN" 
+                                                data-variant="1 Bulan Sharing" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/owz44jq97y38/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Disney+ Hotstar -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="disney">
+                        <div class="h-40 bg-blue-100 dark:bg-blue-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-film text-5xl text-blue-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Disney+ Hotstar</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Layanan streaming</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp20.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="disney-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">Akun dari admin, 2 User 1 Profile, Harga 1 Perangkat, Durasi 28-30 Hari, Legal dan Bergaransi</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp20.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Disney+ Hotstar" 
+                                                data-variant="1 Bulan" 
+                                                data-price="20000"
+                                                data-link="http://lynk.id/primeakun/pvwype5kq5nq/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Netflix -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="netflix">
+                        <div class="h-40 bg-red-100 dark:bg-red-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-tv text-5xl text-red-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Netflix</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Layanan streaming</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp15.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="netflix-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Profile 2 User</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br><br>-- DURASI 1 BULAN<br>-- 1 PROFILE DIGUNAKAN 2 USER<br>-- HANYA 1 PERANGKAT<br>-- BISA TERJADI LIMIT<br>-- GARANSI SAMPAI HABIS</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp15.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Netflix" 
+                                                data-variant="1 Profile 2 User" 
+                                                data-price="15000"
+                                                data-link="http://lynk.id/primeakun/jnj295om72lr/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Profile 1 User</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br><br>-- DURASI 1 BULAN<br>-- LEGAL DAN BERGARANSI FULL<br>KAMU BISA MENGUBAH NAMA PROFILE DAN PIN NYA!</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp25.500</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Netflix" 
+                                                data-variant="1 Profile 1 User" 
+                                                data-price="25500"
+                                                data-link="http://lynk.id/primeakun/6prgx7zzqq18/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Picsart -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="design">
+                    <div class="product-header cursor-pointer" data-product="picsart">
+                        <div class="h-40 bg-pink-100 dark:bg-pink-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-paint-brush text-5xl text-pink-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Picsart</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Aplikasi edit foto</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp5.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="picsart-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN SHARING<br><br>ANTI LIMIT<br>GARANSI FULL</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Picsart" 
+                                                data-variant="1 Bulan" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/1r37moqdyo4r/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prime Video -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="prime">
+                        <div class="h-40 bg-blue-100 dark:bg-blue-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-play-circle text-5xl text-blue-700 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Prime Video</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Layanan streaming</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp5.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="prime-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN SHARING, DAPATKAN 1 PROFILE, LEGAL DAN BERGARANSI</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Prime Video" 
+                                                data-variant="1 Bulan" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/xrznn12zdgx6/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Spotify -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="spotify">
+                        <div class="h-40 bg-green-100 dark:bg-green-900/30 relative flex items-center justify-center">
+                            <i class="fab fa-spotify text-5xl text-green-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Spotify</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Streaming musik</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp10.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="spotify-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan TANPA GARANSI</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">Akun dari admin</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp10.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Spotify" 
+                                                data-variant="1 Bulan TANPA GARANSI" 
+                                                data-price="10000"
+                                                data-link="http://lynk.id/primeakun/g4oew804101o/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan BERGARANSI</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">Akun dari admin</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp20.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Spotify" 
+                                                data-variant="1 Bulan BERGARANSI" 
+                                                data-price="20000"
+                                                data-link="https://lynk.id/primeakun/pmq3dy75gkgp/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vidio -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="vidio">
+                        <div class="h-40 bg-purple-100 dark:bg-purple-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-video text-5xl text-purple-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Vidio</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Layanan streaming</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp15.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="vidio-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">Platinum 2 Bulan [ Tv Only ]</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br><br>DURASI 54 HARI<br>HANYA SUPPORT SMARTTV SAJA!<br>ADA IKLAN, BISA DI SKIP<br>PAKET PLATINUM BUNDLE TV</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp15.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Vidio" 
+                                                data-variant="Platinum 2 Bulan [ Tv Only ]" 
+                                                data-price="15000"
+                                                data-link="http://lynk.id/primeakun/pywdlp32qnk9/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">Platinum 1 Bulan [ Private ]</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">VIDIO PLATINUM<br><br>ALL DEVICE<br>PRIVATE ACCOUNT<br><br>BISA MENONTON [ UCL,UEL, Original Series, BRI Liga 1, Liga 2, dll ]<br>CEK DISINI UNTUK LEBIH LENGKAPNYA : <a href="https://www.vidio.com/pages/package-table-comparison?layout=false" target="_blank" class="text-primary hover:underline">Keunggulan Paket</a></p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp23.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Vidio" 
+                                                data-variant="Platinum 1 Bulan [ Private ]" 
+                                                data-price="23000"
+                                                data-link="https://lynk.id/primeakun/zvwrg8k8ypkp/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Viu -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="viu">
+                        <div class="h-40 bg-purple-100 dark:bg-purple-900/30 relative flex items-center justify-center">
+                            <i class="fas fa-film text-5xl text-purple-500 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">Viu</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Layanan streaming</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp1.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="viu-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN PRIVATE DAN TIDAK DI SHARING KE BANYAK ORANG !</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp1.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Viu" 
+                                                data-variant="1 Bulan" 
+                                                data-price="1000"
+                                                data-link="http://lynk.id/primeakun/wez44geydxmq/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">3 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN<br><br>LEGAL DAN BERGARANSI<br>DURASI 3 BULAN FULL<br>PRIVATE ACCOUNT</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp5.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="Viu" 
+                                                data-variant="3 Bulan" 
+                                                data-price="5000"
+                                                data-link="http://lynk.id/primeakun/kozkk4g5dyg8/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- YouTube -->
+                <div class="product-card bg-white dark:bg-dark rounded-xl shadow-sm hover:shadow-lg overflow-hidden" data-category="streaming">
+                    <div class="product-header cursor-pointer" data-product="youtube">
+                        <div class="h-40 bg-red-100 dark:bg-red-900/30 relative flex items-center justify-center">
+                            <i class="fab fa-youtube text-5xl text-red-600 animate-bounce-slow"></i>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-dark to-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-1">YouTube Premium</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Streaming video</p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-primary font-bold">Rp7.000</span>
+                                <span class="text-gray-400 text-sm ml-1">/bulan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="youtube-variants" class="variant-container">
+                        <div class="p-4 border-t dark:border-gray-700">
+                            <div class="space-y-4">
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan [Akun Mu Sendiri]</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI KAMU, GUNAKAN EMAIL YANG BELUM LIMIT JOIN, CONTOHNYA BARU BERGABUNG 2x DALAM FAMILY DALAM 12 BULAN. JIKA TERJADI LIMIT SILAHKAN GANTI AKUN LAIN</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp7.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="YouTube Premium" 
+                                                data-variant="1 Bulan [Akun Mu Sendiri]" 
+                                                data-price="7000"
+                                                data-link="http://lynk.id/primeakun/qkenjg6x2gd1/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">1 Bulan [Akun Dari Admin]</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN, FULL GARANSI, AKUN PRIVATE</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp10.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="YouTube Premium" 
+                                                data-variant="1 Bulan [Akun Dari Admin]" 
+                                                data-price="10000"
+                                                data-link="http://lynk.id/primeakun/3yj2rdx2k346/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gray-50 dark:bg-dark-lighter">
+                                    <h4 class="font-semibold">Famhead 1 Bulan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 my-2">AKUN DARI ADMIN, FULL GARANSI, BISA INVITE 5 ORANG</p>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="font-bold text-primary">Rp15.000</span>
+                                        <button class="buy-button bg-primary hover:bg-primary-dark text-white px-4 py-1.5 rounded-full text-sm transition-colors" 
+                                                data-product="YouTube Premium" 
+                                                data-variant="Famhead 1 Bulan" 
+                                                data-price="15000"
+                                                data-link="http://lynk.id/primeakun/7v4z26q9q95v/checkout">
+                                            Beli Sekarang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section id="testimonial" class="py-20 bg-white dark:bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Apa Kata <span class="gradient-text">Pelanggan</span> Kami</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Pengalaman pelanggan yang puas dengan layanan PrimeAkun.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto relative">
+                <div class="testimonial-slider">
+                    <div class="testimonial-track">
+                        <div class="testimonial-slide active px-4">
+                            <div class="bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-md">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                                        DS
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold">Deni aditya</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300">"Akun Netflix yang saya beli berfungsi dengan sangat baik. Garansi dan layanan pelanggan yang disediakan juga memuaskan. Harga yang ditawarkan sangat terjangkau untuk pelajar seperti saya."</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-slide px-4">
+                            <div class="bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-md">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white font-bold">
+                                        RA
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold">Rini Anggraini</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300">"Saya sangat puas dengan akun Canva Pro yang saya beli. Dengan hanya Rp1.000, saya bisa mengakses semua fitur premium Canva untuk tugas desain saya. Responnya juga cepat saat saya bertanya."</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-slide px-4">
+                            <div class="bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-md">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
+                                        BW
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold">Budi Wibowo</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300">"Alight Motion yang saya beli berjalan lancar. Support preset 5MB sangat membantu untuk editing video saya. Harganya pun sangat terjangkau untuk akun premium dengan durasi 1 tahun. Sangat direkomendasikan!"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="testimonial-prev absolute top-1/2 -left-4 transform -translate-y-1/2 w-10 h-10 rounded-full bg-white dark:bg-dark-light shadow-md flex items-center justify-center">
+                    <i class="fas fa-chevron-left text-primary"></i>
+                </button>
+                <button class="testimonial-next absolute top-1/2 -right-4 transform -translate-y-1/2 w-10 h-10 rounded-full bg-white dark:bg-dark-light shadow-md flex items-center justify-center">
+                    <i class="fas fa-chevron-right text-primary"></i>
+                </button>
+                
+                <div class="flex justify-center mt-6 gap-2">
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-primary opacity-100"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 opacity-50"></button>
+                    <button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 opacity-50"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-gray-50 dark:bg-dark-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Pertanyaan <span class="gradient-text">Umum</span></h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Temukan jawaban untuk pertanyaan umum tentang produk dan layanan kami.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <div class="bg-white dark:bg-dark rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full p-4 text-left font-semibold flex justify-between items-center">
+                            <span>Bagaimana cara mengakses akun setelah pembelian?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-0">
+                            <p class="text-gray-600 dark:text-gray-400">Setelah pembelian dikonfirmasi, kami akan mengirimkan informasi akun via WhatsApp. Ini termasuk detail login dan petunjuk khusus untuk mengakses layanan premium Anda.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full p-4 text-left font-semibold flex justify-between items-center">
+                            <span>Apa yang dimaksud dengan "bergaransi"?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-0">
+                            <p class="text-gray-600 dark:text-gray-400">Ketika kami menyebutkan akun "bergaransi", artinya jika Anda mengalami masalah dengan akun selama periode berlangganan, kami akan memberikan dukungan atau penggantian untuk memastikan Anda dapat terus menggunakan layanan tersebut.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full p-4 text-left font-semibold flex justify-between items-center">
+                            <span>Bisakah saya berbagi akun dengan teman saya?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-0">
+                            <p class="text-gray-600 dark:text-gray-400">Tergantung pada produk dan varian spesifik. akun sharing hanya di login 1 perangkat dan jika terdeteksi berbagi akun, akan dibanned</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full p-4 text-left font-semibold flex justify-between items-center">
+                            <span>Metode pembayaran apa yang Anda terima?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-0">
+                            <p class="text-gray-600 dark:text-gray-400">Kami menerima berbagai metode pembayaran termasuk transfer bank, e-wallet, dan platform pembayaran digital.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-dark rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full p-4 text-left font-semibold flex justify-between items-center">
+                            <span>Kapan akun saya diproses?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-4 pt-0">
+                            <p class="text-gray-600 dark:text-gray-400">Setelah melakukan pembayaran otomatis akun diproses, jika menunggu lama. harap whatsapp cs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 bg-white dark:bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Hubungi <span class="gradient-text">Kami</span></h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Punya pertanyaan atau butuh bantuan? Hubungi kami melalui salah satu saluran ini.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <a href="https://wa.me/6285974385120" target="_blank" class="bg-gray-50 dark:bg-dark-light rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-all group">
+                    <div class="bg-green-100 dark:bg-green-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-whatsapp text-2xl text-green-600 group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">WhatsApp</h3>
+                    <p class="text-gray-600 dark:text-gray-400">+62 859-7438-5120</p>
+                </a>
+                
+                <a href="https://instagram.com/primeakun_official" target="_blank" class="bg-gray-50 dark:bg-dark-light rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-all group">
+                    <div class="bg-pink-100 dark:bg-pink-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-instagram text-2xl text-pink-600 group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Instagram</h3>
+                    <p class="text-gray-600 dark:text-gray-400">@primeakun_official</p>
+                </a>
+                
+                <a href="https://tiktok.com/@primeakun.id" target="_blank" class="bg-gray-50 dark:bg-dark-light rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-all group">
+                    <div class="bg-black/10 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-tiktok text-2xl text-black dark:text-white group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">TikTok</h3>
+                    <p class="text-gray-600 dark:text-gray-400">@primeakun.id</p>
+                </a>
+            </div>
+            
+            <div class="mt-12 max-w-md mx-auto bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-sm">
+                <h3 class="font-semibold text-lg mb-4 text-center">Atau Email Kami</h3>
+                <div class="flex items-center justify-center gap-3 p-4 bg-white dark:bg-dark rounded-lg">
+                    <i class="far fa-envelope text-primary"></i>
+                    <span class="text-gray-800 dark:text-gray-200">primeakun@catgroup.uk</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-bold gradient-text">PrimeAkun</span>
+                    <p class="text-gray-400 mt-2">Akun premium dengan harga pelajar</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="https://wa.me/6285974385120" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://instagram.com/primeakun_official" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://tiktok.com/@primeakun.id" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-center md:text-left">&copy; 2025 PrimeAkun. Semua hak dilindungi undang-undang.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition-colors">Syarat Layanan</a>
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition-colors">Kebijakan Privasi</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp button -->
+    <a href="https://wa.me/6285974385120" target="_blank" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+    
+    <!-- Product Modal -->
+    <div id="product-modal" class="product-modal">
+        <div class="product-modal-content">
+            <div class="p-5 border-b dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-xl font-bold" id="modal-product-title">Nama Produk</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-5" id="modal-product-content">
+                <!-- Variants will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize dark mode based on user preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // Toggle dark mode
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // Product modal handling
+        const productModal = document.getElementById('product-modal');
+        const modalTitle = document.getElementById('modal-product-title');
+        const modalContent = document.getElementById('modal-product-content');
+        const closeModal = document.getElementById('close-modal');
+        
+        // Show modal when product is clicked
+        document.querySelectorAll('.product-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const productId = header.getAttribute('data-product');
+                const productName = header.querySelector('h3').textContent;
+                const variantContainer = document.getElementById(`${productId}-variants`);
+                
+                // Clone the variants content to show in modal
+                const variantsContent = variantContainer.querySelector('.p-4').cloneNode(true);
+                
+                // Set modal title and content
+                modalTitle.textContent = productName;
+                modalContent.innerHTML = '';
+                modalContent.appendChild(variantsContent);
+                
+                // Add event listeners to the buy buttons in the modal
+                modalContent.querySelectorAll('.buy-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const lynkUrl = button.getAttribute('data-link');
+                        
+                        if (lynkUrl) {
+                            // Open Lynk.id checkout page
+                            window.open(lynkUrl, '_blank');
+                        } else {
+                            // Fallback to WhatsApp if link not found
+                            const product = button.getAttribute('data-product');
+                            const variant = button.getAttribute('data-variant');
+                            const price = button.getAttribute('data-price');
+                            const message = `Halo, saya ingin membeli:\n\nProduk: ${product}\nVarian: ${variant}\nHarga: Rp${price}\n\nMohon informasi lebih lanjut untuk proses pembayaran. Terima kasih!`;
+                            window.open(`https://wa.me/6285974385120?text=${encodeURIComponent(message)}`, '_blank');
+                        }
+                    });
+                });
+                
+                // Show modal
+                productModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling while modal is open
+            });
+        });
+        
+        // Close modal when clicking close button or outside the modal
+        closeModal.addEventListener('click', () => {
+            productModal.classList.remove('active');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                productModal.classList.remove('active');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        });
+        
+        // FAQ toggle
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Buy button handling - Updated to use Lynk.id links
+        document.querySelectorAll('.buy-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent the click from propagating to parent elements
+                
+                const lynkUrl = button.getAttribute('data-link');
+                
+                if (lynkUrl) {
+                    // Open Lynk.id checkout page
+                    window.open(lynkUrl, '_blank');
+                } else {
+                    // Fallback to WhatsApp if link not found
+                    const product = button.getAttribute('data-product');
+                    const variant = button.getAttribute('data-variant');
+                    const price = button.getAttribute('data-price');
+                    const message = `Halo, saya ingin membeli:\n\nProduk: ${product}\nVarian: ${variant}\nHarga: Rp${price}\n\nMohon informasi lebih lanjut untuk proses pembayaran. Terima kasih!`;
+                    window.open(`https://wa.me/6285974385120?text=${encodeURIComponent(message)}`, '_blank');
+                }
+            });
+        });
+
+        // Animation for elements when they enter viewport
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.product-card, .feature-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-rise');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Product Filter Functionality
+        document.querySelectorAll('.product-filter').forEach(filter => {
+            filter.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('.product-filter').forEach(f => {
+                    f.classList.remove('active', 'bg-primary', 'text-white');
+                    f.classList.add('bg-gray-200', 'dark:bg-dark');
+                });
+                
+                filter.classList.add('active', 'bg-primary', 'text-white');
+                filter.classList.remove('bg-gray-200', 'dark:bg-dark');
+                
+                const category = filter.getAttribute('data-filter');
+                
+                // Filter products
+                document.querySelectorAll('.product-card').forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        
+        // Testimonial Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.testimonial-dot');
+        const track = document.querySelector('.testimonial-track');
+        
+        function updateSlider() {
+            // Update slides
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.remove('bg-primary', 'opacity-100');
+                dot.classList.add('bg-gray-300', 'dark:bg-gray-600', 'opacity-50');
+                
+                if (index === currentSlide) {
+                    dot.classList.remove('bg-gray-300', 'dark:bg-gray-600', 'opacity-50');
+                    dot.classList.add('bg-primary', 'opacity-100');
+                }
+            });
+            
+            // Update track position
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        
+        // Initialize testimonial slider navigation
+        document.querySelector('.testimonial-next').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        });
+        
+        document.querySelector('.testimonial-prev').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlider();
+        });
+        
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
+        });
+        
+        // Auto slide every 5 seconds
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }, 5000);
+        
+        // Search functionality
+        const searchInput = document.getElementById('search-products');
+        const searchResults = document.getElementById('search-results');
+        const productCards = document.querySelectorAll('.product-card');
+        
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            
+            if (query.length < 2) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+            
+            // Clear previous results
+            searchResults.innerHTML = '';
+            searchResults.classList.remove('hidden');
+            
+            // Filter products
+            let resultsFound = false;
+            
+            productCards.forEach(card => {
+                const productName = card.querySelector('h3').textContent.toLowerCase();
+                const productType = card.querySelector('p').textContent.toLowerCase();
+                
+                if (productName.includes(query) || productType.includes(query)) {
+                    resultsFound = true;
+                    
+                    // Create result item
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'p-3 hover:bg-gray-100 dark:hover:bg-dark-lighter cursor-pointer flex items-center';
+                    
+                    const iconElement = card.querySelector('.product-header i').cloneNode(true);
+                    iconElement.className = iconElement.className.replace('text-5xl', 'text-2xl');
+                    
+                    resultItem.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-gray-100 dark:bg-dark-light flex items-center justify-center mr-3">
+                            ${iconElement.outerHTML}
+                        </div>
+                        <div>
+                            <div class="font-medium">${card.querySelector('h3').textContent}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">${card.querySelector('p').textContent}</div>
+                        </div>
+                    `;
+                    
+                    // Add click event
+                    resultItem.addEventListener('click', () => {
+                        searchResults.classList.add('hidden');
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        // Highlight the card
+                        card.classList.add('ring-4', 'ring-primary', 'ring-opacity-50');
+                        setTimeout(() => {
+                            card.classList.remove('ring-4', 'ring-primary', 'ring-opacity-50');
+                        }, 2000);
+                        
+                        // Open the variants if closed
+                        const productId = card.querySelector('.product-header').getAttribute('data-product');
+                        const variantContainer = document.getElementById(`${productId}-variants`);
+                        if (!variantContainer.classList.contains('active')) {
+                            card.querySelector('.product-header').click();
+                        }
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                }
+            });
+            
+            // If no results found
+            if (!resultsFound) {
+                searchResults.innerHTML = `
+                    <div class="p-4 text-center text-gray-500 dark:text-gray-400">
+                        Tidak ada produk yang cocok
+                    </div>
+                `;
+            }
+        });
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+        
+        // Recent Purchase Animation
+        function showRecentPurchase() {
+            const recentPurchase = document.getElementById('recent-purchases');
+            const buyers = ['Ahmad', 'Siti', 'Budi', 'Dewi', 'Eko', 'Fira', 'Gita', 'Hadi'];
+            const products = ['Netflix Premium', 'Spotify Premium', 'YouTube Premium', 'Canva Pro', 'CapCut Pro', 'Disney+ Hotstar', 'Prime Video'];
+            
+            // Set random buyer and product
+            document.getElementById('recent-buyer').textContent = buyers[Math.floor(Math.random() * buyers.length)];
+            document.getElementById('recent-product').textContent = products[Math.floor(Math.random() * products.length)];
+            
+            // Show notification
+            recentPurchase.classList.remove('hidden');
+            recentPurchase.classList.remove('-translate-y-10', 'opacity-0');
+            recentPurchase.classList.add('translate-y-0', 'opacity-100');
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                recentPurchase.classList.remove('translate-y-0', 'opacity-100');
+                recentPurchase.classList.add('-translate-y-10', 'opacity-0');
+                
+                setTimeout(() => {
+                    recentPurchase.classList.add('hidden');
+                }, 500);
+            }, 5000);
+        }
+        
+        // Show recent purchase every 20-40 seconds
+        function scheduleRecentPurchase() {
+            const delay = Math.floor(Math.random() * 20000) + 20000; // 20-40 seconds
+            setTimeout(() => {
+                showRecentPurchase();
+                scheduleRecentPurchase();
+            }, delay);
+        }
+        
+        // Run animations
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+            scheduleRecentPurchase();
+            
+            // Show first recent purchase after 5 seconds
+            setTimeout(showRecentPurchase, 5000);
+        });
+    </script>
+</body>
+</html>
